@@ -7,7 +7,7 @@ class Orm(){
     protected $tabla;
     protected $db;
 
-    public function __construct($tabla,$conn){
+    public function __construct($tabla){
 
         $this->tabla = $tabla;
         $this->db = $conn;
