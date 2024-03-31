@@ -23,7 +23,7 @@ class Usuarios{
             die("Error de Conexion: ".$this->conn->connect_error);
         }
     }
-    public function ejecutarConsulta($sql){
+    public function consulta($sql){
         $this->query = $this->conn->query($sql);
 
         if(!$this->query){
@@ -33,7 +33,7 @@ class Usuarios{
         }
     }
 
-    public function obtenerRegistrosObjeto(){
+    public function todos(){
         $registros = [];
         while ($obj = $this->query->fetch_object()) {
             $registros[] = $obj;
