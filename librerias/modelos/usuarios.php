@@ -10,6 +10,7 @@ class Usuarios{
     protected $pass=pass;
     protected $db=db;
     protected $conn;
+    protected $query;
 
     public function __construct(){
         $this->conexion();
@@ -22,6 +23,25 @@ class Usuarios{
             die("Error de Conexion: ".$this->conn->connect_error);
         }
     }
+    public function ejecutarConsulta($sql){
+        $this->query = $this->conn->query($sql);
+
+        if(!$this->query){
+            die("Error en la consulta SQL: " . $this->conn->error);
+        }else{
+            return $this;
+        }
+    }
+
+    public function obtenerRegistrosObjeto(){
+        $registros = [];
+        while ($obj = $this->query->fetch_object()) {
+            $registros[] = $obj;
+        }
+        return $registros;
+    }
+    
+    
 }
 
 ?>
