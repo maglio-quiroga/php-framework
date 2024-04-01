@@ -40,7 +40,18 @@ class Usuarios{
         }
         return $registros;
     }
-    
+    //corregir estas funciones
+    public function insertar($tabla,$columnas,$datos){
+        $this->query = $this->conn->query("INSERT INTO ".$tabla
+    ." ".$columnas."VALUES".$datos);
+    }
+    public function eliminar($tabla,$id){
+        $this->conn->query("DELETE FROM ".$tabla." WHERE id=".$id);
+    }
+    public function actualizar($tabla,$columnas,$valores,$id){
+        $this->conn->query("UPDATE".$tabla." SET".$columnas."VALUES".$valores." WHERE id=".$id);
+    }
+    //
     
 }
 
