@@ -3,7 +3,7 @@
 namespace librerias\modelos;
 use mysqli;
 
-class Usuarios{
+class Modelo{
 
     protected $server=host;
     protected $user=user;
@@ -11,9 +11,11 @@ class Usuarios{
     protected $db=db;
     protected $conn;
     protected $query;
+    protected $tabla;
 
-    public function __construct(){
+    public function __construct($tabla){
         $this->conexion();
+        $this->tabla = $tabla
     }
 
     public function conexion(){
@@ -40,18 +42,32 @@ class Usuarios{
         }
         return $registros;
     }
-    //corregir estas funciones
-    public function insertar($tabla,$columnas,$datos){
-        $this->query = $this->conn->query("INSERT INTO ".$tabla
-    ." ".$columnas."VALUES".$datos);
+    public function insertar($datos){
+
+        $columnas = array_keys($datos);
+        $columnas = implode(', ',$datos);
+
+        $valores = array_values($datos);
+        $valores = "'". implode("', '",$datos) ."'";
+
+        $sql = "INSERT INTO {$this->tabla} ({$columnas}) VALUES ({$valores})";
+        $this->query = $this->conn->query($sql);
     }
-    public function eliminar($tabla,$id){
-        $this->conn->query("DELETE FROM ".$tabla." WHERE id=".$id);
+    public function actualizar($id, $datos){
+
+        $campos  = [];
+        foreach($datos as $key => $value){
+            $campos[] = "{$key} = '{$value}'";
+        }
+        $campos = implode(', ',$campos);
+        $sql = "UPDATE {$this->tabla} SET {$campos} WHERE id={$id}";
+        $this->query = $this->conn->query($sql);
     }
-    public function actualizar($tabla,$columnas,$valores,$id){
-        $this->conn->query("UPDATE".$tabla." SET".$columnas."VALUES".$valores." WHERE id=".$id);
+    public function eliminar($id){
+
+        $sql = "DELETE FROM {$this->table} WHERE id={$id}";
+        $thsi->query = $this->conn->query($sql);
     }
-    //
     
 }
 

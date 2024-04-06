@@ -10,6 +10,10 @@ Route::get('/otro',function(){
     echo "hola desde la otro pagina";
 });
 
+Route::get('/aaa',function(){
+    echo "hola desde la otro pagina aaa";
+});
+
 Route::dispatch();
 
 ?>
